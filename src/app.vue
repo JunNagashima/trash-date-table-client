@@ -1,5 +1,5 @@
 <template>
   <div>
-    初期画面
+    <NuxtPage />
   </div>
 </template>
