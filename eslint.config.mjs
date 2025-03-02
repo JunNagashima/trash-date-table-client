@@ -18,4 +18,10 @@ export default withNuxt(
       'vue/no-use-v-if-with-v-for': 'error',
     },
   },
+  {
+    files: ['src/pages/**/*.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
 )

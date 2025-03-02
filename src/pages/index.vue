@@ -1,10 +1,26 @@
 <script setup lang="ts">
-const title = 'タイトル'
-console.log(title)
+const testMsg = ref('')
+const testTitle = 'タイトル1'
+const testFunc = async () => {
+  const apiUrl = `${useRuntimeConfig().public.apiUrl}/hello`
+  const response = await fetch(apiUrl, {
+    method: 'GET',
+  })
+  const responseBody = await response.json()
+  testMsg.value = responseBody.message
+}
+onMounted(() => {
+  testFunc()
+})
 </script>
 
 <template>
-  <p>Test</p>
+  <div>
+    <p>{{ testTitle }}</p>
+    <p>
+      {{ testMsg }}
+    </p>
+  </div>
 </template>
 
 <style scoped>
