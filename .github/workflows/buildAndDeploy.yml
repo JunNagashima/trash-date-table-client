@@ -1,0 +1,44 @@
+name: Build and Deploy Nuxt3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. リポジトリのコードをチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+    # 2. Node.js のセットアップ（ここでは Node.js 16 を使用）
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+    # 3. AWS の認証情報を設定（Secrets から取得）
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+    # 4. 依存パッケージのインストール
+      - name: Install dependencies
+        run: bun install
+
+    # 5. Nuxt3 プロジェクトのビルド
+      - name: Build Nuxt3 project
+        run: bun run build
+
+    # 6. ビルド成果物を S3 に同期（S3_BUCKET は GitHub Secrets に登録）
+      - name: Deploy to S3
+        run: aws s3 sync .output/public s3://${{ secrets.S3_BUCKET }} --delete
+
+    # 7. CloudFront キャッシュの無効化（CLOUDFRONT_DISTRIBUTION_ID は Secrets に登録）
+      - name: Invalidate CloudFront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
