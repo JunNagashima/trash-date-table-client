@@ -40,6 +40,9 @@ jobs:
       - name: Build Nuxt3 project
         run: bun run build
 
+      - name: Generate static site
+        run: bun run generate
+
     # 6. ビルド成果物を S3 に同期（S3_BUCKET は GitHub Secrets に登録）
       - name: Deploy to S3
         run: aws s3 sync .output/public s3://${{ secrets.S3_BUCKET }} --delete
