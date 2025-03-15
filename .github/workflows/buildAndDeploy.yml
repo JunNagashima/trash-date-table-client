@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  hello:
+  buildAndDeploy:
     runs-on: ubuntu-latest
     steps:
       # 1. リポジトリのコードをチェックアウト

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const testMsg = ref('')
-const testTitle = 'タイトル2'
+const testTitle = 'タイトル3'
 const testFunc = async () => {
   const apiUrl = `${useRuntimeConfig().public.apiUrl}/hello`
   const response = await fetch(apiUrl, {
