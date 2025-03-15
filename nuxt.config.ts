@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiKey: '',
     public: {
-      apiUrl: '',
+      apiUrl: 'https://wx41advo6k.execute-api.ap-northeast-1.amazonaws.com/',
     },
   },
   srcDir: 'src',
